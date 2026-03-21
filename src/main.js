@@ -1,6 +1,6 @@
 import { initRouter } from './router.js';
 import { initGalaxy } from './components/Galaxy.js';
-import { initLyrics, initAudioWithLyrics } from './components/LyricsDisplay.js';
+import { initLyrics, initAudioWithLyrics, setCurrentLyric } from './components/LyricsDisplay.js';
 import './style.css';
 
 let backgroundAudio = null;
@@ -10,21 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initGalaxy();
   initLyrics();
   
-  const overlay = document.getElementById('entry-overlay');
-  const enterBtn = document.getElementById('enter-btn');
-  
-  if (overlay && enterBtn) {
-    enterBtn.addEventListener('click', () => {
-      overlay.classList.add('hidden');
-      initBackgroundMusic();
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 500);
-    });
-  }
-  
   setTimeout(() => {
     document.body.classList.remove('not-loaded');
+    initBackgroundMusic();
   }, 100);
   
   function createShootingStar() {
@@ -56,13 +44,11 @@ function initBackgroundMusic() {
   initAudioWithLyrics(backgroundAudio, '/music/lyrics.lrc');
   
   backgroundAudio.currentTime = 0;
-  backgroundAudio.play().catch(err => console.log('Audio ready:', err));
-  
-  setInterval(() => {
-    if (backgroundAudio && backgroundAudio.paused) {
-      backgroundAudio.play().catch(() => {});
-    }
-  }, 1000);
+  backgroundAudio.play().catch(() => {
+    document.addEventListener('click', () => {
+      if (backgroundAudio) backgroundAudio.play().catch(() => {});
+    }, { once: true });
+  });
 }
 
 window.getBackgroundAudio = () => backgroundAudio;
