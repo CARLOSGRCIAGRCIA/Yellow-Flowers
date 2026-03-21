@@ -1,6 +1,24 @@
+const valeriaMessages = [
+  'Las flores siempre florecen para alguien especial',
+  'Eres la luz en mi cielo estrellado',
+  'Cada pétalo lleva un pensamiento para ti',
+  'Gracias por existir, Valeria',
+  'Mi universo tiene tu nombre escrito en cada estrella',
+  'Eres más bonita que todas las flores juntas'
+];
+
 export function HomePage() {
+  const randomMsg = valeriaMessages[Math.floor(Math.random() * valeriaMessages.length)];
+  const whisperMsg = 'para Valeria, con amor';
+  
   return `
     <div class="page active">
+      <div class="valeria-message" style="animation-delay: 2s;">
+        ${randomMsg}
+      </div>
+      <div class="valeria-whisper" style="animation-delay: 5s;">
+        ${whisperMsg} 💛
+      </div>
       <div class="flowers-container">
         <div class="flowers">
           ${createFlower(1)}
