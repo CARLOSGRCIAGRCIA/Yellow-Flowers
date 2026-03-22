@@ -1,3 +1,5 @@
+import { Footer } from '../components/Footer.js';
+
 export function HomePage() {
   return `
     <div class="page active">
@@ -11,6 +13,7 @@ export function HomePage() {
           ${createGrass()}
         </div>
       </div>
+      ${Footer()}
     </div>
   `;
 }
